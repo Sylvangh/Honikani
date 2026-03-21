@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-<div class="animated-text">HONIKONI</div>
+<div class="animated-text">HONIKANI</div>
 
     <?php if($error): ?>
         <p class="error"><?= htmlspecialchars($error) ?></p>
