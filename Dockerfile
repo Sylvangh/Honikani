@@ -1,20 +1,26 @@
-# Use official PHP with Apache
 FROM php:8.2-apache
 
-# Copy all files to Apache root
-COPY . /var/www/html/
+# Install PHP MySQL extension
+RUN apt-get update && apt-get install -y \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    default-mysql-client \
+    && docker-php-ext-install mysqli pdo pdo_mysql \
+    && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
+# Copy site files
+COPY index.php user/ css/ js/ images/ /var/www/html/
 WORKDIR /var/www/html/
 
-# Make sure Apache can read all files
+# Fix permissions
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
 
-# Enable mod_rewrite for routing if needed
+# Enable mod_rewrite
 RUN a2enmod rewrite
 
-# Expose port 10000 (Render maps this automatically)
+# Expose port for Render
 EXPOSE 10000
 
 # Start Apache
