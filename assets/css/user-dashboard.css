@@ -1,0 +1,590 @@
+/* --- BODY & CONTAINER --- */
+body {
+    margin: 0;
+    padding: 15px;
+    font-family: -apple-system, BlinkMacSystemFont, "San Francisco", Arial;
+    background: #fff7f0;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 15px;
+}
+
+@media (max-width: 500px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- BUTTONS --- */
+.orders-btn {
+    display: inline-block;
+    margin-bottom: 12px;
+    padding: 10px 15px;
+    border-radius: 12px;
+    background: #ffb74d; /* soft orange */
+    color: #5a3e1b; /* dark brown */
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.orders-btn:hover {
+    transform: scale(1.05);
+}
+
+.card {
+    position: relative;
+    background: #fffaf0;
+    border-radius: 16px;
+    padding: 12px;
+
+    box-shadow: 0 5px 12px rgba(0,0,0,0.08);
+    border: 1px solid #ffe6c0;
+
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* 🔥 animated border */
+.card::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 18px;
+
+    background: linear-gradient(270deg, #ffae34, #ffcc80, #ffc061, #ffa927);
+    background-size: 400% 400%;
+
+    z-index: -1;
+
+    animation: gradientMove 3s ease infinite;
+}
+
+@keyframes gradientMove {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+/* --- FULLSCREEN IMAGE VIEWER --- */
+.img-viewer {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.95);
+    justify-content: center;
+    align-items: center;
+}
+
+.img-viewer img {
+    width: 95%;
+    max-height: 90%;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+/* --- TEXT --- */
+.card h3 {
+    font-size: 16px;
+    margin: 8px 0;
+    color: #a65125; /* warm brown */
+}
+
+.card p {
+    font-size: 13px;
+    margin: 4px 0;
+    color: #5a3e1b;
+}
+
+.card b {
+    font-weight: bold;
+}
+
+/* --- FORM BUTTON --- */
+.card form button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    border-radius: 12px;
+    border: none;
+    background: #81c784; /* soft green */
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.card form button:hover {
+    transform: scale(1.05);
+}
+
+/* --- INPUT --- */
+.card form input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 12px;
+    border: 1px solid #ffdca3;
+    margin-top: 6px;
+    font-size: 14px;
+}
+
+
+/* --- IMAGE --- */
+.card img {
+    width: 100%;       /* responsive width */
+    height: auto;      /* maintain original aspect ratio */
+    object-fit: contain; /* fit image without cropping */
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* --- MOBILE TWEAKS --- */
+@media (max-width: 500px) {
+    .card {
+        padding: 10px;
+    }
+
+    .card img {
+        width: 100%;
+        height: auto;      /* maintain original size/aspect ratio */
+        object-fit: contain;
+    }
+}
+
+/* --- INPUT FIX --- */
+.card form input[type="number"] {
+    width: 100%;           /* make it fit card width */
+    box-sizing: border-box; /* include padding/border in width */
+    padding: 10px;
+    border-radius: 12px;
+    border: 1px solid #ffdca3;
+    margin-top: 6px;
+    font-size: 14px;
+    display: block;        /* ensure it doesn’t float */
+}
+@media (max-width: 500px) {
+    .card form input[type="number"] {
+        font-size: 13px;
+        padding: 8px;
+    }
+}
+
+/* KAKANIN LOGO */
+.logo-container{
+    margin: 20px auto 15px;
+    width: 80px; height: 80px;
+    perspective: 500px;
+}
+
+.eye{
+    width:18px; height:18px;
+    background:white;
+    border-radius:50%;
+    position:absolute;
+    top:25px;
+}
+.left-eye{left:18px;}
+.right-eye{right:18px;}
+
+
+/* Top Bar */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: #ffb74d;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+/* Logo + App Name */
+.logo-name {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* App Name */
+.app-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* Logout button */
+.logout-btn {
+    display: inline-flex;       /* allows icon + text alignment */
+    align-items: center;
+    gap: 6px;                   /* space between icon and text */
+    padding: 8px 16px;
+    background: linear-gradient(90deg, #e53935, #ff7961); /* red gradient */
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.logout-btn i {
+    font-size: 16px;            /* icon size */
+}
+
+/* Hover effect */
+.logout-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(229, 57, 53, 0.5);
+}
+
+.eye{
+    width:12px; height:12px;
+    background:white;
+    border-radius:50%;
+    position:absolute;
+    top:15px;
+}
+.left-eye{left:10px;}
+.right-eye{right:10px;}
+
+/* --- TOP BAR --- */
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* left, center, right */
+    padding: 10px 20px;
+    background: #f7be68;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+/* Left bar (App Name) */
+.left-bar {
+    flex: 1;
+}
+.app-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* Center bar (Kakanin Logo) */
+.center-bar {
+    flex: 0; /* center takes only needed space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-container {
+    width: 60px;
+    height: 60px;
+    perspective: 500px;
+}
+
+/* Right bar (Logout button) */
+.right-bar {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.logout-btn {
+    padding: 8px 14px;
+    background: #ff3b30;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+.logout-btn:hover {
+    transform: scale(1.05);
+}
+
+/* container */
+.kakanin-chat {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chat-bubble {
+    position: absolute;
+    top: -8px;
+    right: 50px;
+
+    /* ✅ KEY FIXES */
+    display: inline-block;
+    width: auto;
+    max-width: 150px;      /* limit width */
+    white-space: nowrap;  /* prevent tall box */
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    padding: 5px 8px;
+    font-size: 10px;
+    line-height: 1;
+
+    background: #ffffff;
+    color: #5a3e1b;
+    border-radius: 999px; /* pill shape */
+
+    text-decoration: none;
+    font-weight: 600;
+
+    z-index: 10;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+
+    animation: floatBubble 2s infinite ease-in-out;
+}
+/* small pointer */
+.chat-bubble::after {
+    content: "";
+    position: absolute;
+
+    bottom: -5px;
+    right: 10px;
+
+    border-width: 5px;
+    border-style: solid;
+    border-color: #fff transparent transparent transparent;
+}
+
+/* animations */
+@keyframes floatBubble {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+@keyframes popIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* --- KAKANIN LOGO --- */
+.kakanin-logo {
+    width: 60px;
+    height: 60px;
+    background: #ff9800;
+    border-radius: 50%;
+    position: relative;
+    box-shadow: inset -3px -3px 0 #ffd27f;
+    animation: bounce 2s infinite;
+       position: relative;
+    z-index: 1;
+}
+
+/* eyes */
+.eye {
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 18px;
+}
+.left-eye { left: 12px; }
+.right-eye { right: 12px; }
+
+/* --- ANIMATIONS --- */
+@keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+@keyframes floatBubble {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+.info {
+    display: flex;
+    align-items: center;
+    gap: 6px;        /* space between icon and text */
+    font-size: 14px;
+    color: #555;
+    margin: 4px 0;
+}
+
+.info i {
+    color: #ff9800;  /* icon color */
+    font-size: 16px; /* slightly bigger for visibility */
+}
+
+.price {
+    font-weight: bold;
+    color: #e65100;  /* differentiate price */
+}
+
+/* Form container */
+.order-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+/* Quantity input */
+.order-form input[type="number"] {
+    width: 60px;
+    padding: 6px 10px;
+    border: 1px solid #ffe6c0;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.order-form input[type="number"]:focus {
+    border-color: #ff9800;
+    box-shadow: 0 0 5px rgba(255, 152, 0, 0.5);
+}
+
+/* Submit button */
+.order-form button {
+    padding: 6px 12px;
+    background: linear-gradient(90deg, #ff9800, #ffcc80);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.order-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.5);
+}
+
+
+/* Orders button */
+.orders-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    background: linear-gradient(90deg, #ff9800, #ffcc80);
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.orders-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 152, 0, 0.5);
+}
+
+/* Heading */
+h2 {
+    font-family: 'Pacifico', cursive;
+    font-size: 28px;
+    color: #ff9800;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+
+.animated-text {
+    font-family: 'Pacifico', cursive;
+    font-size: 20px;
+    text-align: center;
+    margin: 10px 0;
+
+    display: inline-block; /* ✅ IMPORTANT FIX */
+
+    /* Gradient text */
+    background: linear-gradient(90deg, #ffae35, #754c00, #fd2c11, #5c3700);
+    background-size: 300% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+
+    /* Glow */
+    text-shadow: 
+        2px 2px 0 #ffd27f,
+        4px 4px 10px rgba(0,0,0,0.15);
+
+    animation: gradientMove 2s linear infinite;
+}
+
+
+/* Search box container */
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 15px 0;
+}
+
+/* Search input */
+.search-box input[type="text"] {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ffe6c0;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-box input[type="text"]:focus {
+    border-color: #ff9800;
+    box-shadow: 0 0 5px rgba(255, 152, 0, 0.5);
+}
+
+/* Search button */
+.search-box button[type="submit"] {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: linear-gradient(90deg, #ff9800, #ffcc80);
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-box button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.5);
+}
+
+/* Cancel button */
+.search-box .cancel-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: linear-gradient(90deg, #e53935, #ff7961);
+    color: #fff;
+    font-weight: bold;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-box .cancel-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(229, 57, 53, 0.5);
+}

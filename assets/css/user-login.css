@@ -1,0 +1,200 @@
+/* BODY & BACKGROUND */
+body {
+    margin:0; padding:0;
+    font-family:-apple-system,BlinkMacSystemFont,"San Francisco",Arial,sans-serif;
+    font-family: 'Fredoka', sans-serif;
+    background: linear-gradient(-45deg,#fff7f0,#fff0e0,#ffe6c0,#fff7f0);
+    background-size:400% 400%;
+    animation: gradientBG 15s ease infinite;
+    display:flex; justify-content:center; align-items:center; height:100vh;
+}
+
+@keyframes gradientBG {
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+/* KAKANIN LOGO */
+.logo-container{
+    margin-bottom:15px;
+    perspective:500px;
+}
+.kakanin-logo{
+    width:80px; height:80px;
+    background:#ff9800; border-radius:50%;
+    position:relative; margin:0 auto;
+    box-shadow: inset -5px -5px 0 #ffd27f;
+      animation: bounce 2s infinite;
+         position: relative;
+    z-index: 1;
+}
+.eye{
+    width:18px;height:18px;
+    background:white;
+    border-radius:50%;
+    position:absolute;
+    top:25px;
+}
+.left-eye{left:18px;}
+.right-eye{right:18px;}
+
+@keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+
+
+/* ERROR */
+.error{color:#ff3b30;margin-bottom:10px;font-size:14px;}
+
+/* FORM */
+.login-form{display:flex;flex-direction:column; gap:12px;}
+.login-form input{
+    padding:12px; border-radius:12px; border:1px solid #ffdca3; font-size:14px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.login-form input:focus, .login-form input:hover{
+    border-color:#ff9800;
+    box-shadow:0 0 6px rgba(255,152,0,0.4);
+    transform: scale(1.02);
+}
+.login-form button{
+    padding:12px;border-radius:12px;border:none;background:#ff9800;color:white;
+    font-size:16px;font-weight:bold;cursor:pointer;transition:0.3s;
+}
+.login-form button:hover{transform:scale(1.05);background:#e68a00;}
+
+/* REGISTER LINK */
+.register-link{margin-top:15px;font-size:14px;}
+.register-link a{color:#ff9800;text-decoration:none;font-weight:bold;}
+.register-link a:hover{text-decoration:underline;}
+
+/* ANIMATIONS */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+@media(max-width:400px){
+    .login-wrapper{padding:25px 15px;}
+    .animated-text{font-size:24px;}
+    .login-form input,.login-form button{font-size:14px;padding:10px;}
+    .kakanin-logo{width:60px;height:60px;}
+    .eye{width:14px;height:14px;top:18px;}
+}
+
+/* Floating animation */
+@keyframes floatText {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+.animated-text {
+    font-family: 'Pacifico', cursive;
+    font-size: 36px;
+    text-align: center;
+    margin: 10px 0;
+
+    display: inline-block; /* ✅ IMPORTANT FIX */
+
+    /* Gradient text */
+    background: linear-gradient(90deg, #e08700, #ffd07a, #fd2c11, #744601);
+    background-size: 300% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+
+    /* Glow */
+    text-shadow: 
+        2px 2px 0 #ffd27f,
+        4px 4px 10px rgba(0,0,0,0.15);
+
+    animation: gradientMove 2s linear infinite;
+}
+
+@keyframes gradientMove {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+.login-wrapper {
+    position: relative;
+    padding: 35px 25px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 360px;
+    text-align: center;
+    background: rgba(255,250,240,0.95);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    animation: fadeInUp 1s ease forwards;
+}
+
+/* animated border glow */
+.login-wrapper::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 22px;
+
+    background: linear-gradient(270deg, #ffa620, #ffdca7, #ffb74d, #fda92b);
+    background-size: 400% 400%;
+
+    z-index: -1;
+
+    animation: gradientMove 30s ease infinite;
+}
+
+/* Search input */
+.search-box input[type="text"] {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ffe6c0;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-box input[type="text"]:focus {
+    border-color: #ff9800;
+    box-shadow: 0 0 5px rgba(255, 152, 0, 0.5);
+}
+
+/* Search button */
+.search-box button[type="submit"] {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: linear-gradient(90deg, #ff9800, #ffcc80);
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-box button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.5);
+}
+
+/* Cancel button */
+.search-box .cancel-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: linear-gradient(90deg, #e53935, #ff7961);
+    color: #fff;
+    font-weight: bold;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-box .cancel-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(229, 57, 53, 0.5);
+}

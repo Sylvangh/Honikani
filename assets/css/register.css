@@ -1,0 +1,96 @@
+/* BODY & BACKGROUND */
+body {
+    margin:0; padding:0;
+    font-family:-apple-system,BlinkMacSystemFont,"San Francisco",Arial,sans-serif;
+    background: linear-gradient(-45deg,#fff7f0,#fff0e0,#ffe6c0,#fff7f0);
+    background-size:400% 400%;
+    animation: gradientBG 15s ease infinite;
+    display:flex; justify-content:center; align-items:center; height:100vh;
+}
+
+@keyframes gradientBG {
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+/* REGISTER WRAPPER */
+.register-wrapper {
+    background: rgba(255,250,240,0.95);
+    padding: 35px 25px;
+    border-radius: 20px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.12);
+    width:100%; max-width:360px; text-align:center;
+    animation: fadeInUp 1s ease forwards;
+}
+
+/* KAKANIN LOGO */
+.logo-container{
+    margin-bottom:15px;
+    perspective:500px;
+}
+.kakanin-logo{
+    width:80px; height:80px;
+    background:#ff9800; border-radius:50%;
+    position:relative; margin:0 auto;
+    box-shadow: inset -5px -5px 0 #ffd27f;
+       animation: bounce 2s infinite;
+         position: relative;
+    z-index: 1;
+}
+.eye{
+    width:18px;height:18px;
+    background:white;
+    border-radius:50%;
+    position:absolute;
+    top:25px;
+}
+.left-eye{left:18px;}
+.right-eye{right:18px;}
+@keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+/* TITLE */
+.animated-text{
+    font-size:28px; font-weight:bold; margin-bottom:15px;
+    transition: color 0.5s;
+}
+
+/* ERROR/SUCCESS */
+.error{color:#ff3b30;margin-bottom:10px;font-size:14px;}
+.success{color:#34c759;margin-bottom:10px;font-size:14px;}
+
+/* FORM */
+.register-form{display:flex;flex-direction:column; gap:12px;}
+.register-form input{
+    padding:12px; border-radius:12px; border:1px solid #ffdca3; font-size:14px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.register-form input:focus, .register-form input:hover{
+    border-color:#ff9800;
+    box-shadow:0 0 6px rgba(255,152,0,0.4);
+    transform: scale(1.02);
+}
+.register-form button{
+    padding:12px;border-radius:12px;border:none;background:#ff9800;color:white;
+    font-size:16px;font-weight:bold;cursor:pointer;transition:0.3s;
+}
+.register-form button:hover{transform:scale(1.05);background:#e68a00;}
+
+/* LOGIN LINK */
+.login-link{margin-top:15px;font-size:14px;}
+.login-link a{color:#ff9800;text-decoration:none;font-weight:bold;}
+.login-link a:hover{text-decoration:underline;}
+
+/* ANIMATIONS */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+@media(max-width:400px){
+    .register-wrapper{padding:25px 15px;}
+    .animated-text{font-size:24px;}
+    .register-form input,.register-form button{font-size:14px;padding:10px;}
+    .kakanin-logo{width:60px;height:60px;}
+    .eye{width:14px;height:14px;top:18px;}
+}

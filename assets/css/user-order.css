@@ -1,0 +1,310 @@
+/* --- BODY & CONTAINER --- */
+body {
+    margin: 0;
+    padding: 15px;
+    font-family: -apple-system, BlinkMacSystemFont, "San Francisco", Arial;
+    background: #fff7f0; /* main kakanin cream */
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 cards per row */
+    gap: 12px;
+    margin-top: 15px;
+}
+
+@media (max-width: 500px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- BACK BUTTON --- */
+.back-btn {
+    display: inline-block;
+    margin-bottom: 12px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    background: #ffb74d; /* complementary to cream */
+    color: #5a3e1b; /* dark brown accent */
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.back-btn:hover {
+    transform: scale(1.05);
+}
+
+/* --- CARD --- */
+.card {
+    background: #fffaf0; /* soft cream */
+    border-radius: 16px;
+    padding: 12px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.08);
+    border: 1px solid #ffe6c0;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
+
+/* --- IMAGE --- */
+.card img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* --- FULLSCREEN IMAGE VIEWER --- */
+.img-viewer {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.95);
+    justify-content: center;
+    align-items: center;
+}
+
+.img-viewer img {
+    width: 95%;
+    max-height: 90%;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+/* --- TEXT --- */
+.card h3 {
+    font-size: 16px;
+    margin: 8px 0;
+    color: #a65125; /* warm brown accent */
+}
+
+.card p {
+    font-size: 13px;
+    margin: 4px 0;
+    color: #5a3e1b; /* slightly darker brown for readability */
+}
+
+.card b {
+    font-weight: bold;
+}
+
+/* --- BUTTONS --- */
+.chat-btn, .delete-btn {
+    display: block;
+    text-align: center;
+    margin-top: 8px;
+    padding: 10px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+    transition: 0.25s;
+}
+
+/* Chat Button: soft complementary green */
+.chat-btn {
+    background: #81c784; /* soft green */
+}
+
+.chat-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Cancel Button: soft complementary orange */
+.delete-btn {
+    background: #ffb74d; /* soft orange */
+}
+
+.delete-btn:hover {
+    transform: scale(1.05);
+}
+
+/* --- MOBILE TWEAKS --- */
+@media (max-width: 500px) {
+    .card {
+        padding: 10px;
+    }
+    .card img {
+        height: 120px;
+    }
+}
+
+/* Container layout */
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Card */
+.card {
+    position: relative;
+    background: #fffaf0;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.08);
+    border: 1px solid #ffe6c0;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+/* Card image */
+.card img {
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+/* Info lines */
+.card .info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: #555;
+    margin: 4px 0;
+}
+
+.card .info i {
+    color: #ff9800;
+    font-size: 16px;
+}
+
+.card .price i {
+    color: #e65100;
+}
+
+.card .status i {
+    color: #2196f3;
+}
+
+/* Buttons */
+.card a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    margin-top: 8px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card .chat-btn {
+    background: linear-gradient(90deg, #ff9800, #ffcc80);
+    color: #fff;
+}
+
+.card .delete-btn {
+    background: linear-gradient(90deg, #e53935, #ff7961);
+    color: #fff;
+}
+
+.card a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Page heading and back button */
+h2 {
+    font-family: 'Pacifico', cursive;
+    font-size: 28px;
+    color: #ff9800;
+    text-align: center;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: #fffcf3;
+    font-weight: bold;
+    transition: transform 0.2s ease;
+}
+
+.back-btn:hover {
+    transform: translateX(-3px);
+}
+
+
+/* Search input */
+.search-box input[type="text"] {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ffe6c0;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-box input[type="text"]:focus {
+    border-color: #ff9800;
+    box-shadow: 0 0 5px rgba(255, 152, 0, 0.5);
+}
+
+/* Search button */
+.search-box button[type="submit"] {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: linear-gradient(90deg, #ff9800, #ffcc80);
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-box button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.5);
+}
+
+/* Cancel button */
+.search-box .cancel-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: linear-gradient(90deg, #e53935, #ff7961);
+    color: #fff;
+    font-weight: bold;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-box .cancel-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(229, 57, 53, 0.5);
+}
