@@ -1,12 +1,12 @@
 FROM php:8.2-apache
 
-# Install MySQL extensions
+# Install PostgreSQL + required libs
 RUN apt-get update && apt-get install -y \
-    default-mysql-client \
-    && docker-php-ext-install mysqli pdo pdo_mysql \
+    libpq-dev \
+    && docker-php-ext-install pdo pdo_pgsql pgsql \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy everything
+# Copy all files
 COPY . /var/www/html/
 
 WORKDIR /var/www/html/
