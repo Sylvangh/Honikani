@@ -14,12 +14,12 @@ WORKDIR /var/www/html/
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
 
-# 🔥 THIS PART FIXES FORBIDDEN
-RUN echo '<Directory /var/www/html>\
-    Options Indexes FollowSymLinks\
-    AllowOverride All\
-    Require all granted\
-</Directory>' > /etc/apache2/conf-available/custom.conf \
+# ✅ FIXED Apache config (proper formatting)
+RUN printf "<Directory /var/www/html>\n\
+    Options Indexes FollowSymLinks\n\
+    AllowOverride All\n\
+    Require all granted\n\
+</Directory>\n" > /etc/apache2/conf-available/custom.conf \
     && a2enconf custom
 
 # Enable rewrite
