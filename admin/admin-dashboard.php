@@ -9,7 +9,7 @@ header("Expires: 0");
 // Include config and auth
 require_once "../config.php";
 require_once "../includes/auth.php";
-checkUser(); // This now reliably redirects if not logged in
+checkAdmin();
 
 // ----------------- Handle Add Product -----------------
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_product'])) {
