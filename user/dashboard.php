@@ -75,7 +75,7 @@ if ($search) {
 <div class="top-bar">
     <!-- Left: App Name -->
     <div class="left-bar">
-        <div class="animated-text">HONIKONI</div>
+        <div class="animated-text">HONIKANI</div>
     </div>
 
 <!-- Center: Kakanin Logo -->
