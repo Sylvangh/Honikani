@@ -1,5 +1,4 @@
 <?php
-// admin-dashboard.php
 ob_start(); // Start output buffering
 
 // Prevent browser caching
@@ -20,30 +19,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_product'])) {
     $tmpName = $_FILES['image']['tmp_name'];
 
     if ($_FILES['image']['error'] !== 0) {
-        die("Upload error. Please try again.");
-    }
+        $errorMessage = "Upload error. Please try again.";
+    } else {
+        try {
+            // Upload to Cloudinary
+            $result = $cloudinary->uploadApi()->upload($tmpName);
+            $imageUrl = $result['secure_url'];
 
-    try {
-        // Upload to Cloudinary
-        $result = $cloudinary->uploadApi()->upload($tmpName);
-        $imageUrl = $result['secure_url'];
+            // Save product to DB
+            $stmt = $db->prepare("INSERT INTO products (name, price, quantity, image) VALUES (?, ?, ?, ?)");
+            $stmt->execute([$name, $price, $quantity, $imageUrl]);
 
-        // Save product to DB
-        $stmt = $db->prepare("INSERT INTO products (name, price, quantity, image) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$name, $price, $quantity, $imageUrl]);
+            // Redirect to refresh page and prevent duplicate submission
+            header("Location: admin-dashboard.php?success=1");
+            exit;
 
-        // Redirect to refresh page and show new product
-        header("Location: admin-dashboard.php?success=1");
-        exit;
-
-    } catch (\Cloudinary\Api\Exception\ApiError $e) {
-        $errorMessage = "Cloudinary Upload Error: " . $e->getMessage();
-    } catch (\Exception $e) {
-        $errorMessage = "Error: " . $e->getMessage();
+        } catch (\Cloudinary\Api\Exception\ApiError $e) {
+            $errorMessage = "Cloudinary Upload Error: " . $e->getMessage();
+        } catch (\Exception $e) {
+            $errorMessage = "Error: " . $e->getMessage();
+        }
     }
 }
 
-// ----------------- Show success message after redirect -----------------
+// ----------------- Show success message -----------------
 $successMessage = '';
 if (isset($_GET['success']) && $_GET['success'] == 1) {
     $successMessage = "Product added successfully!";
