@@ -31,9 +31,9 @@ use Cloudinary\Cloudinary;
 // ✅ Hardcoded credentials (immediate working)
 $cloudinary = new Cloudinary([
     'cloud' => [
-        'cloud_name' => 'sylvan',
-        'api_key'    => '868362577675189',
-        'api_secret' => 'F656DmKNnTFYX55Ps8av50MrQyg',
+        'cloud_name' => 'Root',
+        'api_key'    => '423985652246424',
+        'api_secret' => '3DsXen4ig5ES4cUVEhL7EhmFJ9g',
     ],
     'url' => ['secure' => true]
 ]);
