@@ -10,28 +10,26 @@ header("Expires: 0");
 require_once "../config.php";
 require_once "../includes/auth.php";
 checkAdmin();
-
 // ----------------- Handle Add Product -----------------
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_product'])) {
+
     $name = $_POST['name'];
     $price = $_POST['price'];
-    $quantity = $_POST['quantity']; // NEW
+    $quantity = $_POST['quantity'];
 
-    $imageName = $_FILES['image']['name'];
     $tmpName = $_FILES['image']['tmp_name'];
 
     if ($_FILES['image']['error'] !== 0) die("Upload error");
 
-    $allowed = ['jpg','jpeg','png','webp'];
-    $ext = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
-    if (!in_array($ext, $allowed)) die("Invalid file type");
+    // Upload to Cloudinary
+    $result = $cloudinary->uploadApi()->upload($tmpName);
 
-    $uploadDir = "../uploads/";
-    $newName = uniqid() . "." . $ext;
-    move_uploaded_file($tmpName, $uploadDir . $newName);
+    // Get Cloudinary image URL
+    $imageUrl = $result['secure_url'];
 
+    // Save to DB
     $stmt = $db->prepare("INSERT INTO products (name, price, quantity, image) VALUES (?, ?, ?, ?)");
-    $stmt->execute([$name, $price, $quantity, $newName]);
+    $stmt->execute([$name, $price, $quantity, $imageUrl]);
 }
 
 // ----------------- Handle Product Search -----------------
@@ -76,7 +74,7 @@ if ($search) {
 
 <?php foreach($products as $p): ?>
 <div class="card">
-   <img src="../uploads/<?= $p['image'] ?>" onclick="openImage(this)">
+   <img src="<?= $p['image'] ?>" onclick="openImage(this)">
     
     <div class="card-body">
         <b><?= $p['name'] ?></b>
