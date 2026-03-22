@@ -65,15 +65,15 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?php foreach($orders as $o): ?>
 <div class="order-card">
 
-    <!-- ✅ PRODUCT IMAGE -->
-    <img src="../uploads/<?= $o['image'] ?>" onclick="openViewer(this)">
+    <!-- ✅ Use Cloudinary URL directly -->
+    <img src="<?= htmlspecialchars($o['image']) ?>" onclick="openViewer(this)" alt="<?= htmlspecialchars($o['product_name']) ?>">
 
     <h3><?= htmlspecialchars($o['product_name']) ?></h3>
 
     <p><b>Order ID:</b> <?= $o['id'] ?></p>
-    <p><b>Customer:</b> <?= $o['email'] ?> (ID: <?= $o['user_id'] ?>)</p>
+    <p><b>Customer:</b> <?= htmlspecialchars($o['email']) ?> (ID: <?= $o['user_id'] ?>)</p>
     <p><b>Quantity:</b> <?= (int)$o['quantity'] ?></p>
-    <p><b>Total:</b> ₱<?= $o['total'] ?></p>
+    <p><b>Total:</b> ₱<?= htmlspecialchars($o['total']) ?></p>
     <p><b>Status:</b> <?= ucfirst($o['status']) ?></p>
 
     <div class="order-actions">
@@ -94,6 +94,7 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?php endforeach; ?>
 </div>
 
+<!-- Fullscreen Image Viewer -->
 <div id="viewer" class="img-viewer" onclick="closeViewer()">
     <img id="viewerImg">
 </div>
