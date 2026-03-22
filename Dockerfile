@@ -1,32 +1,48 @@
+# Use official PHP Apache image
 FROM php:8.2-apache
 
+# ------------------------
 # Install system dependencies & PostgreSQL driver
-RUN apt-get update && apt-get install -y libpq-dev unzip git \
+# ------------------------
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    unzip \
+    git \
     && docker-php-ext-install pdo pdo_pgsql pgsql \
     && rm -rf /var/lib/apt/lists/*
 
+# ------------------------
 # Install Composer
+# ------------------------
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
     && php -r "unlink('composer-setup.php');"
 
+# ------------------------
 # Set working directory
+# ------------------------
 WORKDIR /var/www/html
 
-# Copy only composer files first (for caching)
+# ------------------------
+# Copy composer files and install dependencies first (Docker caching)
+# ------------------------
 COPY composer.json composer.lock ./
-
-# Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Copy rest of the app
+# ------------------------
+# Copy rest of the application
+# ------------------------
 COPY . .
 
-# Fix permissions
+# ------------------------
+# Fix permissions for Apache
+# ------------------------
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
 
-# Apache config: allow overrides & enable rewrite
+# ------------------------
+# Apache config: allow .htaccess overrides & enable rewrite
+# ------------------------
 RUN printf "<Directory /var/www/html>\n\
     Options Indexes FollowSymLinks\n\
     AllowOverride All\n\
@@ -35,7 +51,12 @@ RUN printf "<Directory /var/www/html>\n\
     && a2enconf custom \
     && a2enmod rewrite
 
-# Expose port for Render
+# ------------------------
+# Expose port Render expects
+# ------------------------
 EXPOSE 10000
 
+# ------------------------
+# Start Apache
+# ------------------------
 CMD ["apache2-foreground"]
