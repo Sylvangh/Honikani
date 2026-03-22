@@ -19,4 +19,23 @@ try {
 } catch(PDOException $e) {
     die("DB Error: " . $e->getMessage());
 }
+
+/* =========================
+   CLOUDINARY SETUP
+   ========================= */
+
+require __DIR__ . '/vendor/autoload.php';
+
+use Cloudinary\Cloudinary;
+
+$cloudinary = new Cloudinary([
+    'cloud' => [
+        'cloud_name' => 'sylvan', // your cloud name
+        'api_key'    => '868362577675189',
+        'api_secret' => 'F656DmKNnTFYX55Ps8av50MrQyg', // 🔥 replace with NEW one
+    ],
+    'url' => [
+        'secure' => true
+    ]
+]);
 ?>
