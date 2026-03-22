@@ -1,4 +1,5 @@
 <?php
+// ----------------- Database Setup -----------------
 $host = "dpg-d6qvp3i4d50c73bkp6n0-a.oregon-postgres.render.com";
 $port = "5432";
 $dbname = "registrations_ghe3";
@@ -16,24 +17,23 @@ try {
     die("DB Error: " . $e->getMessage());
 }
 
-/* =========================
-   CLOUDINARY SETUP
-   ========================= */
-
+// ----------------- Composer Autoload -----------------
 $autoloadPath = __DIR__ . '/vendor/autoload.php';
 if (!file_exists($autoloadPath)) {
     die("Composer autoload not found. Run 'composer install' in the project root.");
 }
 require $autoloadPath;
 
+// ----------------- Cloudinary Setup -----------------
 use Cloudinary\Cloudinary;
 
-// ✅ Hardcoded credentials (immediate working)
+// ✅ Hardcoded credentials (for immediate testing)
+// Cloud name must be exactly what Cloudinary shows in your dashboard
 $cloudinary = new Cloudinary([
     'cloud' => [
-        'cloud_name' => 'Root',
-        'api_key'    => '423985652246424',
-        'api_secret' => '3DsXen4ig5ES4cUVEhL7EhmFJ9g',
+        'cloud_name' => 'dyjsfdndc',        // your real Cloudinary cloud name
+        'api_key'    => '868362577675189',  // API key
+        'api_secret' => 'F656DmKNnTFYX55Ps8av50MrQyg', // API secret
     ],
     'url' => ['secure' => true]
 ]);
