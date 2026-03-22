@@ -1,17 +1,19 @@
 <?php
-// dashboard.php
-ob_start(); // start output buffering
+// admin-dashboard.php
+ob_start(); // Start output buffering
+
 // Prevent browser caching
 header("Cache-Control: no-cache, no-store, must-revalidate");
 header("Pragma: no-cache");
 header("Expires: 0");
 
-// Include config and auth
+// Include config and authentication
 require_once "../config.php";
 require_once "../includes/auth.php";
 checkAdmin();
+
 // ----------------- Handle Add Product -----------------
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_product'])) {
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_product'])) {
 
     $name = $_POST['name'];
     $price = $_POST['price'];
@@ -19,17 +21,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_product'])) {
 
     $tmpName = $_FILES['image']['tmp_name'];
 
-    if ($_FILES['image']['error'] !== 0) die("Upload error");
+    if ($_FILES['image']['error'] !== 0) {
+        die("Upload error. Please try again.");
+    }
 
-    // Upload to Cloudinary
-    $result = $cloudinary->uploadApi()->upload($tmpName);
+    try {
+        // Upload to Cloudinary
+        $result = $cloudinary->uploadApi()->upload($tmpName);
 
-    // Get Cloudinary image URL
-    $imageUrl = $result['secure_url'];
+        // Get Cloudinary image URL
+        $imageUrl = $result['secure_url'];
 
-    // Save to DB
-    $stmt = $db->prepare("INSERT INTO products (name, price, quantity, image) VALUES (?, ?, ?, ?)");
-    $stmt->execute([$name, $price, $quantity, $imageUrl]);
+        // Save product to database
+        $stmt = $db->prepare("INSERT INTO products (name, price, quantity, image) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$name, $price, $quantity, $imageUrl]);
+
+        $successMessage = "Product added successfully!";
+    } catch (\Cloudinary\Api\Exception\ApiError $e) {
+        // Cloudinary API error
+        $errorMessage = "Cloudinary Upload Error: " . $e->getMessage();
+    } catch (\Exception $e) {
+        // General error
+        $errorMessage = "Error: " . $e->getMessage();
+    }
 }
 
 // ----------------- Handle Product Search -----------------
@@ -42,10 +56,18 @@ if ($search) {
     $products = $db->query("SELECT * FROM products ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC);
 }
 ?>
+
 <link rel="stylesheet" href="../assets/css/style.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <h2 class="title">Admin Dashboard</h2>
 
+<?php if (!empty($successMessage)): ?>
+    <div class="success-msg"><?= htmlspecialchars($successMessage) ?></div>
+<?php endif; ?>
+
+<?php if (!empty($errorMessage)): ?>
+    <div class="error-msg"><?= htmlspecialchars($errorMessage) ?></div>
+<?php endif; ?>
 
 <form method="GET" class="search-box">
     <input type="text" name="search" placeholder="Search Products..." value="<?= htmlspecialchars($search) ?>">
@@ -61,42 +83,32 @@ if ($search) {
     <input name="quantity" type="number" placeholder="Quantity" min="1" required>
     <input type="file" name="image" accept="image/*" required>
     <button name="add_product">Add Product</button>
-    <a href="product-orders.php" class="orders-btn">
-   View All Orders
-</a>
-
-
+    <a href="product-orders.php" class="orders-btn">View All Orders</a>
 </form>
 
 <hr>
 
 <h3>Products</h3>
 
-<?php foreach($products as $p): ?>
+<?php foreach ($products as $p): ?>
 <div class="card">
-   <img src="<?= $p['image'] ?>" onclick="openImage(this)">
-    
+    <img src="<?= htmlspecialchars($p['image']) ?>" onclick="openImage(this)">
     <div class="card-body">
-        <b><?= $p['name'] ?></b>
-        <span>Qty: <?= $p['quantity'] ?></span>
-        <span class="price">₱<?= $p['price'] ?></span>
+        <b><?= htmlspecialchars($p['name']) ?></b>
+        <span>Qty: <?= htmlspecialchars($p['quantity']) ?></span>
+        <span class="price">₱<?= htmlspecialchars($p['price']) ?></span>
 
         <div class="card-actions">
             <a href="delete-product.php?id=<?= $p['id'] ?>" 
                onclick="return confirm('Delete this product?')" 
                class="delete-btn">Delete</a>
 
-            <!-- Edit Product -->
             <a href="edit-product.php?id=<?= $p['id'] ?>" class="edit-btn">Edit Product</a>
-
-            <!-- ✅ View Orders for this product -->
-           <a href="product-orders.php?product_id=<?= $p['id'] ?>" class="orders-btn">View Orders</a>
-    </div>
+            <a href="product-orders.php?product_id=<?= $p['id'] ?>" class="orders-btn">View Orders</a>
         </div>
     </div>
 </div>
 <?php endforeach; ?>
-
 
 <div id="imgModal" class="img-modal" onclick="closeImage()">
     <img id="modalImg">
