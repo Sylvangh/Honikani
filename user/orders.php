@@ -28,19 +28,6 @@ if (isset($_GET['cancel'])) {
 }
 
 // ----------------- Fetch User Orders -----------------
-$stmt = $db->prepare("
-    SELECT orders.*, products.name, products.image
-    FROM orders
-    JOIN products ON orders.product_id = products.id
-    WHERE orders.user_id = ?
-    ORDER BY orders.id DESC
-");
-$stmt->execute([$user_id]);
-$orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
-
-// ----------------- Handle Product Search -----------------
 $search = $_GET['search'] ?? '';
 
 $sql = "
@@ -66,13 +53,12 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Orders</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Orders</title>
 
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/user-order.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="../assets/css/user-order.css">
 </head>
 <body>
 
@@ -81,12 +67,9 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <form method="GET" class="search-box">
     <input type="text" name="search" placeholder="Search Products..." value="<?= htmlspecialchars($search) ?>">
-
     <button type="submit"><i class="fas fa-search"></i> Search</button>
-
     <a href="orders.php" class="cancel-btn"><i class="fas fa-times"></i> Cancel</a>
 </form>
-
 
 <div class="container">
     <?php if(empty($orders)): ?>
@@ -95,24 +78,14 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <?php foreach($orders as $o): ?>
         <div class="card">
-            <img src="../uploads/<?= $o['image'] ?>" onclick="openViewer(this)" alt="<?= htmlspecialchars($o['name']) ?>">
+            <!-- Use Cloudinary URL directly -->
+            <img src="<?= htmlspecialchars($o['image']) ?>" onclick="openViewer(this)" alt="<?= htmlspecialchars($o['name']) ?>">
 
             <h3><?= htmlspecialchars($o['name']) ?></h3>
 
-            <p class="info">
-                <i class="fas fa-box"></i>
-                Quantity: <?= $o['quantity'] ?>
-            </p>
-
-            <p class="info price">
-                <i class="fas fa-peso-sign"></i>
-                Total: ₱<?= $o['total'] ?>
-            </p>
-
-            <p class="info status">
-                <i class="fas fa-info-circle"></i>
-                Status: <?= ucfirst($o['status']) ?>
-            </p>
+            <p class="info"><i class="fas fa-box"></i> Quantity: <?= (int)$o['quantity'] ?></p>
+            <p class="info price"><i class="fas fa-peso-sign"></i> Total: ₱<?= htmlspecialchars($o['total']) ?></p>
+            <p class="info status"><i class="fas fa-info-circle"></i> Status: <?= ucfirst($o['status']) ?></p>
 
             <a href="https://www.facebook.com/ma.honey.dolorito" target="_blank" class="chat-btn">
                 <i class="fas fa-comment-dots"></i> Chat with Seller
@@ -141,6 +114,5 @@ function closeViewer() {
     document.getElementById("viewer").style.display = "none";
 }
 </script>
-
 </body>
 </html>
