@@ -19,29 +19,26 @@ try {
 } catch(PDOException $e) {
     die("DB Error: " . $e->getMessage());
 }
+
 /* =========================
    CLOUDINARY SETUP
    ========================= */
 
-// Make sure Composer autoload exists
 $autoloadPath = __DIR__ . '/vendor/autoload.php';
 if (!file_exists($autoloadPath)) {
     die("Composer autoload not found. Run 'composer install' in the project root.");
 }
-
 require $autoloadPath;
 
 use Cloudinary\Cloudinary;
 
-// Initialize Cloudinary
+// Use environment variables for Cloudinary
 $cloudinary = new Cloudinary([
     'cloud' => [
-        'cloud_name' => 'Root', // your cloud name
-        'api_key'    => '423985652246424',
-        'api_secret' => '3DsXen4ig5ES4cUVEhL7EhmFJ9g',
+        'cloud_name' => getenv('sylvan'),
+        'api_key'    => getenv('868362577675189'),
+        'api_secret' => getenv('F656DmKNnTFYX55Ps8av50MrQyg'),
     ],
-    'url' => [
-        'secure' => true
-    ]
+    'url' => ['secure' => true]
 ]);
 ?>
