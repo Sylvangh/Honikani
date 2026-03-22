@@ -36,9 +36,9 @@ use Cloudinary\Cloudinary;
 // Initialize Cloudinary
 $cloudinary = new Cloudinary([
     'cloud' => [
-        'cloud_name' => 'sylvan', // your cloud name
-        'api_key'    => '868362577675189',
-        'api_secret' => 'F656DmKNnTFYX55Ps8av50MrQyg',
+        'cloud_name' => 'Root', // your cloud name
+        'api_key'    => '423985652246424',
+        'api_secret' => '3DsXen4ig5ES4cUVEhL7EhmFJ9g',
     ],
     'url' => [
         'secure' => true
