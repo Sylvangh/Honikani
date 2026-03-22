@@ -14,11 +14,9 @@ checkAdmin();
 
 // ----------------- Handle Add Product -----------------
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_product'])) {
-
     $name = $_POST['name'];
     $price = $_POST['price'];
     $quantity = $_POST['quantity'];
-
     $tmpName = $_FILES['image']['tmp_name'];
 
     if ($_FILES['image']['error'] !== 0) {
@@ -28,22 +26,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_product'])) {
     try {
         // Upload to Cloudinary
         $result = $cloudinary->uploadApi()->upload($tmpName);
-
-        // Get Cloudinary image URL
         $imageUrl = $result['secure_url'];
 
-        // Save product to database
+        // Save product to DB
         $stmt = $db->prepare("INSERT INTO products (name, price, quantity, image) VALUES (?, ?, ?, ?)");
         $stmt->execute([$name, $price, $quantity, $imageUrl]);
 
-        $successMessage = "Product added successfully!";
+        // Redirect to refresh page and show new product
+        header("Location: admin-dashboard.php?success=1");
+        exit;
+
     } catch (\Cloudinary\Api\Exception\ApiError $e) {
-        // Cloudinary API error
         $errorMessage = "Cloudinary Upload Error: " . $e->getMessage();
     } catch (\Exception $e) {
-        // General error
         $errorMessage = "Error: " . $e->getMessage();
     }
+}
+
+// ----------------- Show success message after redirect -----------------
+$successMessage = '';
+if (isset($_GET['success']) && $_GET['success'] == 1) {
+    $successMessage = "Product added successfully!";
 }
 
 // ----------------- Handle Product Search -----------------
@@ -118,7 +121,6 @@ if ($search) {
 function openImage(img) {
     const modal = document.getElementById("imgModal");
     const modalImg = document.getElementById("modalImg");
-
     modal.style.display = "flex";
     modalImg.src = img.src;
 }
