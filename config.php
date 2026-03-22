@@ -6,16 +6,12 @@ $user = "registrations_ghe3_user";
 $pass = "7t55ce58WYKrOEF9AINd1aWTCnizNiTj";
 
 try {
-    // Added sslmode=require
     $db = new PDO(
         "pgsql:host=$host;port=$port;dbname=$dbname;sslmode=require",
         $user,
         $pass
     );
-
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    // Optional: confirm connection
-    // echo "Connected successfully!";
 } catch(PDOException $e) {
     die("DB Error: " . $e->getMessage());
 }
@@ -32,13 +28,12 @@ require $autoloadPath;
 
 use Cloudinary\Cloudinary;
 
-// Use environment variables for Cloudinary
+// ✅ Hardcoded credentials (immediate working)
 $cloudinary = new Cloudinary([
     'cloud' => [
-        'cloud_name' => getenv('sylvan'),
-        'api_key'    => getenv('868362577675189'),
-        'api_secret' => getenv('F656DmKNnTFYX55Ps8av50MrQyg'),
+        'cloud_name' => 'sylvan',
+        'api_key'    => '868362577675189',
+        'api_secret' => 'F656DmKNnTFYX55Ps8av50MrQyg',
     ],
     'url' => ['secure' => true]
 ]);
-?>
